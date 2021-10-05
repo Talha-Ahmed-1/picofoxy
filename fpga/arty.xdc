@@ -3,14 +3,14 @@ set_property PACKAGE_PIN E3 [get_ports {clock}]
 set_property IOSTANDARD LVCMOS33 [get_ports {clock}]
 
 # LEDs
-set_property PACKAGE_PIN H5  [get_ports {io_gpio_io_0}]
-set_property PACKAGE_PIN J5  [get_ports {io_gpio_io_1}]
-set_property PACKAGE_PIN T9  [get_ports {io_gpio_io_2}]
-set_property PACKAGE_PIN T10 [get_ports {io_gpio_io_3}]
-set_property IOSTANDARD LVCMOS33 [get_ports {io_gpio_io_0}]
-set_property IOSTANDARD LVCMOS33 [get_ports {io_gpio_io_1}]
-set_property IOSTANDARD LVCMOS33 [get_ports {io_gpio_io_2}]
-set_property IOSTANDARD LVCMOS33 [get_ports {io_gpio_io_3}]
+set_property PACKAGE_PIN H5  [get_ports { io_spi_cs_n }]
+set_property PACKAGE_PIN J5  [get_ports { io_spi_sclk }]
+set_property PACKAGE_PIN T9  [get_ports { io_spi_mosi }]
+set_property PACKAGE_PIN T10 [get_ports { io_spi_miso }]
+set_property IOSTANDARD LVCMOS33 [get_ports { io_spi_cs_n }]
+set_property IOSTANDARD LVCMOS33 [get_ports { io_spi_sclk }]
+set_property IOSTANDARD LVCMOS33 [get_ports { io_spi_mosi }]
+set_property IOSTANDARD LVCMOS33 [get_ports { io_spi_miso }]
 
 ## RGB LEDs
 #set_property PACKAGE_PIN E1 [get_ports { io_gpio_en_o[0] }]
@@ -58,10 +58,10 @@ create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_
 #set_property -dict { PACKAGE_PIN K1    IOSTANDARD LVCMOS33 } [get_ports { io_gpio_o[15] }]; #IO_L23N_T3_35 Sch=led3_r
 
 ## LEDs
-#set_property -dict {PACKAGE_PIN H5 IOSTANDARD LVCMOS33} [get_ports { io_gpio_buf_0 }]
-#set_property -dict {PACKAGE_PIN J5 IOSTANDARD LVCMOS33} [get_ports { io_gpio_buf_1 }]
-#set_property -dict {PACKAGE_PIN T9 IOSTANDARD LVCMOS33} [get_ports { io_gpio_buf_2 }]
-#set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33} [get_ports { io_gpio_buf_3 }]
+# set_property -dict {PACKAGE_PIN H5 IOSTANDARD LVCMOS33} [get_ports { io_spi_cs_n }]
+# set_property -dict {PACKAGE_PIN J5 IOSTANDARD LVCMOS33} [get_ports { io_spi_sclk }]
+# set_property -dict {PACKAGE_PIN T9 IOSTANDARD LVCMOS33} [get_ports { io_spi_mosi }]
+# set_property -dict {PACKAGE_PIN T10 IOSTANDARD LVCMOS33} [get_ports { io_gpio_buf_3 }]
 
 ## Buttons
 #set_property -dict {PACKAGE_PIN D9 IOSTANDARD LVCMOS33} [get_ports reset]
