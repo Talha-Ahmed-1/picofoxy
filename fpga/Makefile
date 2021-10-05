@@ -11,7 +11,7 @@ BUILDDIR:=build
 ifeq ($(TARGET),arty_35)
   PARTNAME := xc7a35tcsg324-1
   #XDC:=${current_dir}/arty.xdc
-  XDC:=~/Desktop/picofoxy/fpga/arty.xdc
+  XDC:=~/picofoxy/fpga/arty.xdc
   BOARD_BUILDDIR := ${BUILDDIR}/arty_35
 else ifeq ($(TARGET),arty_100)
   PARTNAME:= xc7a100tcsg324-1
