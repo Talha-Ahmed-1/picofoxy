@@ -35,7 +35,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {clock}]
 ## Buttons
 set_property PACKAGE_PIN D9 [get_ports {reset}]
 set_property IOSTANDARD LVCMOS33 [get_ports { reset }]
-create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports clock]
+create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports {clock}]
 
 ## Switches
 #set_property -dict { PACKAGE_PIN A8    IOSTANDARD LVCMOS33 } [get_ports { io_gpio_i[0] }]; #IO_L12N_T1_MRCC_16 Sch=sw[0]
