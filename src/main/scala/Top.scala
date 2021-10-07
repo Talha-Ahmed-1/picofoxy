@@ -6,8 +6,8 @@ import chisel3.experimental.Analog
 import chisel3.stage.ChiselStage
 import jigsaw.fpga.boards.artyA7._
 import jigsaw.rams.fpga.BlockRam
-// import jigsaw.peripherals.gpio._
-import spiflash._
+import jigsaw.peripherals.spiflash._
+// import spiflash._
 
 class Picofoxy(programFile: Option[String]) extends Module {
   val io = IO(new Bundle {

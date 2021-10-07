@@ -266,55 +266,55 @@ module BlockRamWithoutMasking(
   reg [31:0] _RAND_3;
   reg [31:0] _RAND_4;
 `endif // RANDOMIZE_REG_INIT
-  reg [31:0] mem [0:1023]; // @[BlockRam.scala 70:24]
+  reg [31:0] mem [0:1023]; // @[BlockRam.scala 82:24]
 initial begin 
  $readmemh("/home/talha/picofoxy/fpga/program.mem", mem); 
  end
-  wire [31:0] mem_io_rsp_bits_dataResponse_MPORT_data; // @[BlockRam.scala 70:24]
-  wire [9:0] mem_io_rsp_bits_dataResponse_MPORT_addr; // @[BlockRam.scala 70:24]
-  wire [31:0] mem_MPORT_data; // @[BlockRam.scala 70:24]
-  wire [9:0] mem_MPORT_addr; // @[BlockRam.scala 70:24]
-  wire  mem_MPORT_mask; // @[BlockRam.scala 70:24]
-  wire  mem_MPORT_en; // @[BlockRam.scala 70:24]
+  wire [31:0] mem_io_rsp_bits_dataResponse_MPORT_data; // @[BlockRam.scala 82:24]
+  wire [9:0] mem_io_rsp_bits_dataResponse_MPORT_addr; // @[BlockRam.scala 82:24]
+  wire [31:0] mem_MPORT_data; // @[BlockRam.scala 82:24]
+  wire [9:0] mem_MPORT_addr; // @[BlockRam.scala 82:24]
+  wire  mem_MPORT_mask; // @[BlockRam.scala 82:24]
+  wire  mem_MPORT_en; // @[BlockRam.scala 82:24]
   reg  mem_io_rsp_bits_dataResponse_MPORT_en_pipe_0;
   reg [9:0] mem_io_rsp_bits_dataResponse_MPORT_addr_pipe_0;
-  reg  validReg; // @[BlockRam.scala 60:25]
-  reg  errReg; // @[BlockRam.scala 61:23]
+  reg  validReg; // @[BlockRam.scala 72:25]
+  reg  errReg; // @[BlockRam.scala 73:23]
   wire  _addrMisaligned_T = io_req_ready & io_req_valid; // @[Decoupled.scala 40:37]
-  wire  addrMisaligned = _addrMisaligned_T & |io_req_bits_addrRequest[1:0]; // @[BlockRam.scala 66:24]
-  wire [31:0] _addrOutOfBounds_T_1 = io_req_bits_addrRequest / 3'h4; // @[BlockRam.scala 67:65]
-  wire  addrOutOfBounds = _addrMisaligned_T & _addrOutOfBounds_T_1 >= 32'h3ff; // @[BlockRam.scala 67:25]
-  wire  _T_1 = ~io_req_bits_isWrite; // @[BlockRam.scala 76:25]
-  wire  _T_2 = _addrMisaligned_T & ~io_req_bits_isWrite; // @[BlockRam.scala 76:22]
-  wire  _T_4 = _addrMisaligned_T & io_req_bits_isWrite; // @[BlockRam.scala 80:29]
-  wire  _GEN_9 = _addrMisaligned_T & ~io_req_bits_isWrite | _T_4; // @[BlockRam.scala 76:47 BlockRam.scala 79:14]
+  wire  addrMisaligned = _addrMisaligned_T & |io_req_bits_addrRequest[1:0]; // @[BlockRam.scala 78:24]
+  wire [31:0] _addrOutOfBounds_T_1 = io_req_bits_addrRequest / 3'h4; // @[BlockRam.scala 79:65]
+  wire  addrOutOfBounds = _addrMisaligned_T & _addrOutOfBounds_T_1 >= 32'h3ff; // @[BlockRam.scala 79:25]
+  wire  _T_1 = ~io_req_bits_isWrite; // @[BlockRam.scala 88:25]
+  wire  _T_2 = _addrMisaligned_T & ~io_req_bits_isWrite; // @[BlockRam.scala 88:22]
+  wire  _T_4 = _addrMisaligned_T & io_req_bits_isWrite; // @[BlockRam.scala 92:29]
+  wire  _GEN_9 = _addrMisaligned_T & ~io_req_bits_isWrite | _T_4; // @[BlockRam.scala 88:47 BlockRam.scala 91:14]
   assign mem_io_rsp_bits_dataResponse_MPORT_addr = mem_io_rsp_bits_dataResponse_MPORT_addr_pipe_0;
-  assign mem_io_rsp_bits_dataResponse_MPORT_data = mem[mem_io_rsp_bits_dataResponse_MPORT_addr]; // @[BlockRam.scala 70:24]
+  assign mem_io_rsp_bits_dataResponse_MPORT_data = mem[mem_io_rsp_bits_dataResponse_MPORT_addr]; // @[BlockRam.scala 82:24]
   assign mem_MPORT_data = io_req_bits_dataRequest;
   assign mem_MPORT_addr = _addrOutOfBounds_T_1[9:0];
   assign mem_MPORT_mask = 1'h1;
   assign mem_MPORT_en = _T_2 ? 1'h0 : _T_4;
-  assign io_req_ready = 1'h1; // @[BlockRam.scala 64:16]
-  assign io_rsp_valid = validReg; // @[BlockRam.scala 62:16]
-  assign io_rsp_bits_dataResponse = mem_io_rsp_bits_dataResponse_MPORT_data; // @[BlockRam.scala 76:47 BlockRam.scala 78:30]
-  assign io_rsp_bits_error = errReg; // @[BlockRam.scala 63:21]
+  assign io_req_ready = 1'h1; // @[BlockRam.scala 76:16]
+  assign io_rsp_valid = validReg; // @[BlockRam.scala 74:16]
+  assign io_rsp_bits_dataResponse = mem_io_rsp_bits_dataResponse_MPORT_data; // @[BlockRam.scala 88:47 BlockRam.scala 90:30]
+  assign io_rsp_bits_error = errReg; // @[BlockRam.scala 75:21]
   always @(posedge clock) begin
     if(mem_MPORT_en & mem_MPORT_mask) begin
-      mem[mem_MPORT_addr] <= mem_MPORT_data; // @[BlockRam.scala 70:24]
+      mem[mem_MPORT_addr] <= mem_MPORT_data; // @[BlockRam.scala 82:24]
     end
     mem_io_rsp_bits_dataResponse_MPORT_en_pipe_0 <= _addrMisaligned_T & _T_1;
     if (_addrMisaligned_T & _T_1) begin
       mem_io_rsp_bits_dataResponse_MPORT_addr_pipe_0 <= _addrOutOfBounds_T_1[9:0];
     end
-    if (reset) begin // @[BlockRam.scala 60:25]
-      validReg <= 1'h0; // @[BlockRam.scala 60:25]
+    if (reset) begin // @[BlockRam.scala 72:25]
+      validReg <= 1'h0; // @[BlockRam.scala 72:25]
     end else begin
       validReg <= _GEN_9;
     end
-    if (reset) begin // @[BlockRam.scala 61:23]
-      errReg <= 1'h0; // @[BlockRam.scala 61:23]
+    if (reset) begin // @[BlockRam.scala 73:23]
+      errReg <= 1'h0; // @[BlockRam.scala 73:23]
     end else begin
-      errReg <= addrMisaligned | addrOutOfBounds; // @[BlockRam.scala 69:10]
+      errReg <= addrMisaligned | addrOutOfBounds; // @[BlockRam.scala 81:10]
     end
   end
 // Register and memory initialization
@@ -403,121 +403,121 @@ module BlockRamWithMasking(
   reg [31:0] _RAND_11;
   reg [31:0] _RAND_12;
 `endif // RANDOMIZE_REG_INIT
-  reg [7:0] mem_0 [0:1023]; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_0_MPORT_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_0_MPORT_addr; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_0_MPORT_1_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_0_MPORT_1_addr; // @[BlockRam.scala 129:24]
-  wire  mem_0_MPORT_1_mask; // @[BlockRam.scala 129:24]
-  wire  mem_0_MPORT_1_en; // @[BlockRam.scala 129:24]
+  reg [7:0] mem_0 [0:1023]; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_0_MPORT_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_0_MPORT_addr; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_0_MPORT_1_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_0_MPORT_1_addr; // @[BlockRam.scala 141:24]
+  wire  mem_0_MPORT_1_mask; // @[BlockRam.scala 141:24]
+  wire  mem_0_MPORT_1_en; // @[BlockRam.scala 141:24]
   reg  mem_0_MPORT_en_pipe_0;
   reg [9:0] mem_0_MPORT_addr_pipe_0;
-  reg [7:0] mem_1 [0:1023]; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_1_MPORT_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_1_MPORT_addr; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_1_MPORT_1_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_1_MPORT_1_addr; // @[BlockRam.scala 129:24]
-  wire  mem_1_MPORT_1_mask; // @[BlockRam.scala 129:24]
-  wire  mem_1_MPORT_1_en; // @[BlockRam.scala 129:24]
+  reg [7:0] mem_1 [0:1023]; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_1_MPORT_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_1_MPORT_addr; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_1_MPORT_1_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_1_MPORT_1_addr; // @[BlockRam.scala 141:24]
+  wire  mem_1_MPORT_1_mask; // @[BlockRam.scala 141:24]
+  wire  mem_1_MPORT_1_en; // @[BlockRam.scala 141:24]
   reg  mem_1_MPORT_en_pipe_0;
   reg [9:0] mem_1_MPORT_addr_pipe_0;
-  reg [7:0] mem_2 [0:1023]; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_2_MPORT_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_2_MPORT_addr; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_2_MPORT_1_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_2_MPORT_1_addr; // @[BlockRam.scala 129:24]
-  wire  mem_2_MPORT_1_mask; // @[BlockRam.scala 129:24]
-  wire  mem_2_MPORT_1_en; // @[BlockRam.scala 129:24]
+  reg [7:0] mem_2 [0:1023]; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_2_MPORT_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_2_MPORT_addr; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_2_MPORT_1_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_2_MPORT_1_addr; // @[BlockRam.scala 141:24]
+  wire  mem_2_MPORT_1_mask; // @[BlockRam.scala 141:24]
+  wire  mem_2_MPORT_1_en; // @[BlockRam.scala 141:24]
   reg  mem_2_MPORT_en_pipe_0;
   reg [9:0] mem_2_MPORT_addr_pipe_0;
-  reg [7:0] mem_3 [0:1023]; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_3_MPORT_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_3_MPORT_addr; // @[BlockRam.scala 129:24]
-  wire [7:0] mem_3_MPORT_1_data; // @[BlockRam.scala 129:24]
-  wire [9:0] mem_3_MPORT_1_addr; // @[BlockRam.scala 129:24]
-  wire  mem_3_MPORT_1_mask; // @[BlockRam.scala 129:24]
-  wire  mem_3_MPORT_1_en; // @[BlockRam.scala 129:24]
+  reg [7:0] mem_3 [0:1023]; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_3_MPORT_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_3_MPORT_addr; // @[BlockRam.scala 141:24]
+  wire [7:0] mem_3_MPORT_1_data; // @[BlockRam.scala 141:24]
+  wire [9:0] mem_3_MPORT_1_addr; // @[BlockRam.scala 141:24]
+  wire  mem_3_MPORT_1_mask; // @[BlockRam.scala 141:24]
+  wire  mem_3_MPORT_1_en; // @[BlockRam.scala 141:24]
   reg  mem_3_MPORT_en_pipe_0;
   reg [9:0] mem_3_MPORT_addr_pipe_0;
-  wire  byteLane_0 = io_req_bits_activeByteLane[0]; // @[BlockRam.scala 116:52]
-  wire  byteLane_1 = io_req_bits_activeByteLane[1]; // @[BlockRam.scala 116:52]
-  wire  byteLane_2 = io_req_bits_activeByteLane[2]; // @[BlockRam.scala 116:52]
-  wire  byteLane_3 = io_req_bits_activeByteLane[3]; // @[BlockRam.scala 116:52]
-  reg  validReg; // @[BlockRam.scala 124:25]
+  wire  byteLane_0 = io_req_bits_activeByteLane[0]; // @[BlockRam.scala 128:52]
+  wire  byteLane_1 = io_req_bits_activeByteLane[1]; // @[BlockRam.scala 128:52]
+  wire  byteLane_2 = io_req_bits_activeByteLane[2]; // @[BlockRam.scala 128:52]
+  wire  byteLane_3 = io_req_bits_activeByteLane[3]; // @[BlockRam.scala 128:52]
+  reg  validReg; // @[BlockRam.scala 136:25]
   wire  _T = io_req_ready & io_req_valid; // @[Decoupled.scala 40:37]
-  wire  _T_1 = ~io_req_bits_isWrite; // @[BlockRam.scala 131:25]
-  wire  _T_2 = _T & ~io_req_bits_isWrite; // @[BlockRam.scala 131:22]
-  wire [31:0] _T_3 = io_req_bits_addrRequest / 3'h4; // @[BlockRam.scala 133:46]
-  wire  _T_6 = _T & io_req_bits_isWrite; // @[BlockRam.scala 135:29]
-  wire [7:0] rdata_0 = mem_0_MPORT_data; // @[BlockRam.scala 131:47 BlockRam.scala 133:11]
-  wire [7:0] rdata_1 = mem_1_MPORT_data; // @[BlockRam.scala 131:47 BlockRam.scala 133:11]
-  wire [7:0] rdata_2 = mem_2_MPORT_data; // @[BlockRam.scala 131:47 BlockRam.scala 133:11]
-  wire [7:0] rdata_3 = mem_3_MPORT_data; // @[BlockRam.scala 131:47 BlockRam.scala 133:11]
-  wire  _GEN_26 = _T & ~io_req_bits_isWrite | _T_6; // @[BlockRam.scala 131:47 BlockRam.scala 134:14]
-  wire [7:0] data_0 = byteLane_0 ? rdata_0 : 8'h0; // @[BlockRam.scala 148:8]
-  wire [7:0] data_1 = byteLane_1 ? rdata_1 : 8'h0; // @[BlockRam.scala 148:8]
-  wire [7:0] data_2 = byteLane_2 ? rdata_2 : 8'h0; // @[BlockRam.scala 148:8]
-  wire [7:0] data_3 = byteLane_3 ? rdata_3 : 8'h0; // @[BlockRam.scala 148:8]
+  wire  _T_1 = ~io_req_bits_isWrite; // @[BlockRam.scala 143:25]
+  wire  _T_2 = _T & ~io_req_bits_isWrite; // @[BlockRam.scala 143:22]
+  wire [31:0] _T_3 = io_req_bits_addrRequest / 3'h4; // @[BlockRam.scala 145:46]
+  wire  _T_6 = _T & io_req_bits_isWrite; // @[BlockRam.scala 147:29]
+  wire [7:0] rdata_0 = mem_0_MPORT_data; // @[BlockRam.scala 143:47 BlockRam.scala 145:11]
+  wire [7:0] rdata_1 = mem_1_MPORT_data; // @[BlockRam.scala 143:47 BlockRam.scala 145:11]
+  wire [7:0] rdata_2 = mem_2_MPORT_data; // @[BlockRam.scala 143:47 BlockRam.scala 145:11]
+  wire [7:0] rdata_3 = mem_3_MPORT_data; // @[BlockRam.scala 143:47 BlockRam.scala 145:11]
+  wire  _GEN_26 = _T & ~io_req_bits_isWrite | _T_6; // @[BlockRam.scala 143:47 BlockRam.scala 146:14]
+  wire [7:0] data_0 = byteLane_0 ? rdata_0 : 8'h0; // @[BlockRam.scala 160:8]
+  wire [7:0] data_1 = byteLane_1 ? rdata_1 : 8'h0; // @[BlockRam.scala 160:8]
+  wire [7:0] data_2 = byteLane_2 ? rdata_2 : 8'h0; // @[BlockRam.scala 160:8]
+  wire [7:0] data_3 = byteLane_3 ? rdata_3 : 8'h0; // @[BlockRam.scala 160:8]
   wire [15:0] io_rsp_bits_dataResponse_lo = {data_1,data_0}; // @[Cat.scala 30:58]
   wire [15:0] io_rsp_bits_dataResponse_hi = {data_3,data_2}; // @[Cat.scala 30:58]
   assign mem_0_MPORT_addr = mem_0_MPORT_addr_pipe_0;
-  assign mem_0_MPORT_data = mem_0[mem_0_MPORT_addr]; // @[BlockRam.scala 129:24]
+  assign mem_0_MPORT_data = mem_0[mem_0_MPORT_addr]; // @[BlockRam.scala 141:24]
   assign mem_0_MPORT_1_data = io_req_bits_dataRequest[7:0];
   assign mem_0_MPORT_1_addr = _T_3[9:0];
   assign mem_0_MPORT_1_mask = io_req_bits_activeByteLane[0];
   assign mem_0_MPORT_1_en = _T_2 ? 1'h0 : _T_6;
   assign mem_1_MPORT_addr = mem_1_MPORT_addr_pipe_0;
-  assign mem_1_MPORT_data = mem_1[mem_1_MPORT_addr]; // @[BlockRam.scala 129:24]
+  assign mem_1_MPORT_data = mem_1[mem_1_MPORT_addr]; // @[BlockRam.scala 141:24]
   assign mem_1_MPORT_1_data = io_req_bits_dataRequest[15:8];
   assign mem_1_MPORT_1_addr = _T_3[9:0];
   assign mem_1_MPORT_1_mask = io_req_bits_activeByteLane[1];
   assign mem_1_MPORT_1_en = _T_2 ? 1'h0 : _T_6;
   assign mem_2_MPORT_addr = mem_2_MPORT_addr_pipe_0;
-  assign mem_2_MPORT_data = mem_2[mem_2_MPORT_addr]; // @[BlockRam.scala 129:24]
+  assign mem_2_MPORT_data = mem_2[mem_2_MPORT_addr]; // @[BlockRam.scala 141:24]
   assign mem_2_MPORT_1_data = io_req_bits_dataRequest[23:16];
   assign mem_2_MPORT_1_addr = _T_3[9:0];
   assign mem_2_MPORT_1_mask = io_req_bits_activeByteLane[2];
   assign mem_2_MPORT_1_en = _T_2 ? 1'h0 : _T_6;
   assign mem_3_MPORT_addr = mem_3_MPORT_addr_pipe_0;
-  assign mem_3_MPORT_data = mem_3[mem_3_MPORT_addr]; // @[BlockRam.scala 129:24]
+  assign mem_3_MPORT_data = mem_3[mem_3_MPORT_addr]; // @[BlockRam.scala 141:24]
   assign mem_3_MPORT_1_data = io_req_bits_dataRequest[31:24];
   assign mem_3_MPORT_1_addr = _T_3[9:0];
   assign mem_3_MPORT_1_mask = io_req_bits_activeByteLane[3];
   assign mem_3_MPORT_1_en = _T_2 ? 1'h0 : _T_6;
-  assign io_req_ready = 1'h1; // @[BlockRam.scala 127:16]
-  assign io_rsp_valid = validReg; // @[BlockRam.scala 125:16]
+  assign io_req_ready = 1'h1; // @[BlockRam.scala 139:16]
+  assign io_rsp_valid = validReg; // @[BlockRam.scala 137:16]
   assign io_rsp_bits_dataResponse = {io_rsp_bits_dataResponse_hi,io_rsp_bits_dataResponse_lo}; // @[Cat.scala 30:58]
   always @(posedge clock) begin
     if(mem_0_MPORT_1_en & mem_0_MPORT_1_mask) begin
-      mem_0[mem_0_MPORT_1_addr] <= mem_0_MPORT_1_data; // @[BlockRam.scala 129:24]
+      mem_0[mem_0_MPORT_1_addr] <= mem_0_MPORT_1_data; // @[BlockRam.scala 141:24]
     end
     mem_0_MPORT_en_pipe_0 <= _T & _T_1;
     if (_T & _T_1) begin
       mem_0_MPORT_addr_pipe_0 <= _T_3[9:0];
     end
     if(mem_1_MPORT_1_en & mem_1_MPORT_1_mask) begin
-      mem_1[mem_1_MPORT_1_addr] <= mem_1_MPORT_1_data; // @[BlockRam.scala 129:24]
+      mem_1[mem_1_MPORT_1_addr] <= mem_1_MPORT_1_data; // @[BlockRam.scala 141:24]
     end
     mem_1_MPORT_en_pipe_0 <= _T & _T_1;
     if (_T & _T_1) begin
       mem_1_MPORT_addr_pipe_0 <= _T_3[9:0];
     end
     if(mem_2_MPORT_1_en & mem_2_MPORT_1_mask) begin
-      mem_2[mem_2_MPORT_1_addr] <= mem_2_MPORT_1_data; // @[BlockRam.scala 129:24]
+      mem_2[mem_2_MPORT_1_addr] <= mem_2_MPORT_1_data; // @[BlockRam.scala 141:24]
     end
     mem_2_MPORT_en_pipe_0 <= _T & _T_1;
     if (_T & _T_1) begin
       mem_2_MPORT_addr_pipe_0 <= _T_3[9:0];
     end
     if(mem_3_MPORT_1_en & mem_3_MPORT_1_mask) begin
-      mem_3[mem_3_MPORT_1_addr] <= mem_3_MPORT_1_data; // @[BlockRam.scala 129:24]
+      mem_3[mem_3_MPORT_1_addr] <= mem_3_MPORT_1_data; // @[BlockRam.scala 141:24]
     end
     mem_3_MPORT_en_pipe_0 <= _T & _T_1;
     if (_T & _T_1) begin
       mem_3_MPORT_addr_pipe_0 <= _T_3[9:0];
     end
-    if (reset) begin // @[BlockRam.scala 124:25]
-      validReg <= 1'h0; // @[BlockRam.scala 124:25]
+    if (reset) begin // @[BlockRam.scala 136:25]
+      validReg <= 1'h0; // @[BlockRam.scala 136:25]
     end else begin
       validReg <= _GEN_26;
     end
@@ -763,24 +763,24 @@ module Spi(
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
 `endif // RANDOMIZE_REG_INIT
-  wire  spiProtocol_clock; // @[Spi.scala 50:33]
-  wire  spiProtocol_reset; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_miso; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_mosi; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_ss; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_sck; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_data_in_valid; // @[Spi.scala 50:33]
-  wire [31:0] spiProtocol_io_data_in_bits; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_data_out_valid; // @[Spi.scala 50:33]
-  wire [31:0] spiProtocol_io_data_out_bits; // @[Spi.scala 50:33]
-  wire  spiProtocol_io_CPOL; // @[Spi.scala 50:33]
-  reg [31:0] ControlReg; // @[Spi.scala 34:29]
-  wire  _vv_T = io_req_bits_addrRequest == 32'h0; // @[Spi.scala 36:42]
+  wire  spiProtocol_clock; // @[Spi.scala 60:33]
+  wire  spiProtocol_reset; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_miso; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_mosi; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_ss; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_sck; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_data_in_valid; // @[Spi.scala 60:33]
+  wire [31:0] spiProtocol_io_data_in_bits; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_data_out_valid; // @[Spi.scala 60:33]
+  wire [31:0] spiProtocol_io_data_out_bits; // @[Spi.scala 60:33]
+  wire  spiProtocol_io_CPOL; // @[Spi.scala 60:33]
+  reg [31:0] ControlReg; // @[Spi.scala 32:29]
+  wire  _vv_T = io_req_bits_addrRequest == 32'h0; // @[Spi.scala 34:42]
   wire [31:0] _GEN_1 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? spiProtocol_io_data_out_bits :
-    io_req_bits_addrRequest; // @[Spi.scala 49:79 Spi.scala 56:34 Spi.scala 72:34]
-  wire  _GEN_2 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? spiProtocol_io_data_out_valid : 1'h1; // @[Spi.scala 49:79 Spi.scala 57:22 Spi.scala 74:22]
-  wire  _GEN_3 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? 1'h0 : 1'h1; // @[Spi.scala 49:79 Spi.scala 59:27 Spi.scala 73:27]
-  Protocol spiProtocol ( // @[Spi.scala 50:33]
+    io_req_bits_addrRequest; // @[Spi.scala 56:79 Spi.scala 67:34 Spi.scala 83:34]
+  wire  _GEN_2 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? spiProtocol_io_data_out_valid : 1'h1; // @[Spi.scala 56:79 Spi.scala 68:22 Spi.scala 85:22]
+  wire  _GEN_3 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? 1'h0 : 1'h1; // @[Spi.scala 56:79 Spi.scala 70:27 Spi.scala 84:27]
+  Protocol spiProtocol ( // @[Spi.scala 60:33]
     .clock(spiProtocol_clock),
     .reset(spiProtocol_reset),
     .io_miso(spiProtocol_io_miso),
@@ -793,23 +793,23 @@ module Spi(
     .io_data_out_bits(spiProtocol_io_data_out_bits),
     .io_CPOL(spiProtocol_io_CPOL)
   );
-  assign io_rsp_valid = _vv_T & io_req_bits_isWrite | _GEN_2; // @[Spi.scala 38:74 Spi.scala 44:22]
-  assign io_rsp_bits_dataResponse = _vv_T & io_req_bits_isWrite ? io_req_bits_dataRequest : _GEN_1; // @[Spi.scala 38:74 Spi.scala 42:34]
-  assign io_rsp_bits_error = _vv_T & io_req_bits_isWrite ? 1'h0 : _GEN_3; // @[Spi.scala 38:74 Spi.scala 43:27]
-  assign io_cs_n = spiProtocol_io_ss; // @[Spi.scala 49:79 Spi.scala 68:17]
-  assign io_sclk = spiProtocol_io_sck; // @[Spi.scala 49:79 Spi.scala 67:17]
-  assign io_mosi = spiProtocol_io_mosi; // @[Spi.scala 49:79 Spi.scala 66:17]
+  assign io_rsp_valid = _vv_T & io_req_bits_isWrite | _GEN_2; // @[Spi.scala 37:74 Spi.scala 51:22]
+  assign io_rsp_bits_dataResponse = _vv_T & io_req_bits_isWrite ? io_req_bits_dataRequest : _GEN_1; // @[Spi.scala 37:74 Spi.scala 49:34]
+  assign io_rsp_bits_error = _vv_T & io_req_bits_isWrite ? 1'h0 : _GEN_3; // @[Spi.scala 37:74 Spi.scala 50:27]
+  assign io_cs_n = spiProtocol_io_ss; // @[Spi.scala 56:79 Spi.scala 79:17]
+  assign io_sclk = spiProtocol_io_sck; // @[Spi.scala 56:79 Spi.scala 78:17]
+  assign io_mosi = spiProtocol_io_mosi; // @[Spi.scala 56:79 Spi.scala 77:17]
   assign spiProtocol_clock = clock;
   assign spiProtocol_reset = reset;
-  assign spiProtocol_io_miso = io_miso; // @[Spi.scala 64:29]
-  assign spiProtocol_io_data_in_valid = io_req_bits_addrRequest == 32'h0 ? 1'h0 : 1'h1; // @[Spi.scala 36:17]
-  assign spiProtocol_io_data_in_bits = io_req_bits_dataRequest; // @[Spi.scala 52:38]
-  assign spiProtocol_io_CPOL = ControlReg[1]; // @[Spi.scala 62:42]
+  assign spiProtocol_io_miso = io_miso; // @[Spi.scala 75:29]
+  assign spiProtocol_io_data_in_valid = io_req_bits_addrRequest == 32'h0 ? 1'h0 : 1'h1; // @[Spi.scala 34:17]
+  assign spiProtocol_io_data_in_bits = io_req_bits_dataRequest; // @[Spi.scala 62:38]
+  assign spiProtocol_io_CPOL = ControlReg[1]; // @[Spi.scala 73:42]
   always @(posedge clock) begin
-    if (reset) begin // @[Spi.scala 34:29]
-      ControlReg <= 32'h0; // @[Spi.scala 34:29]
-    end else if (_vv_T & io_req_bits_isWrite) begin // @[Spi.scala 38:74]
-      ControlReg <= io_req_bits_dataRequest; // @[Spi.scala 39:20]
+    if (reset) begin // @[Spi.scala 32:29]
+      ControlReg <= 32'h0; // @[Spi.scala 32:29]
+    end else if (_vv_T & io_req_bits_isWrite) begin // @[Spi.scala 37:74]
+      ControlReg <= io_req_bits_dataRequest; // @[Spi.scala 44:20]
     end
   end
 // Register and memory initialization
