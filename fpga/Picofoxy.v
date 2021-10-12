@@ -7203,10 +7203,10 @@ endmodule
 module Picofoxy(
   input   clock,
   input   reset,
-  output  io_spi_cs_n,
-  output  io_spi_sclk,
-  output  io_spi_mosi,
-  input   io_spi_miso
+  output  io_cio_spi_cs_n,
+  output  io_cio_spi_sclk,
+  output  io_cio_spi_mosi,
+  input   io_cio_spi_miso
 );
   wire  top_clock; // @[Top.scala 21:19]
   wire  top_reset; // @[Top.scala 21:19]
@@ -7228,11 +7228,11 @@ module Picofoxy(
     .clk_in1(pll_clk_in1),
     .clk_out1(pll_clk_out1)
   );
-  assign io_spi_cs_n = top_io_spi_cs_n; // @[Top.scala 27:15]
-  assign io_spi_sclk = top_io_spi_sclk; // @[Top.scala 28:15]
-  assign io_spi_mosi = top_io_spi_mosi; // @[Top.scala 29:15]
+  assign io_cio_spi_cs_n = top_io_spi_cs_n; // @[Top.scala 27:19]
+  assign io_cio_spi_sclk = top_io_spi_sclk; // @[Top.scala 28:19]
+  assign io_cio_spi_mosi = top_io_spi_mosi; // @[Top.scala 29:19]
   assign top_clock = pll_clk_out1; // @[Top.scala 25:13]
   assign top_reset = reset;
-  assign top_io_spi_miso = io_spi_miso; // @[Top.scala 30:19]
+  assign top_io_spi_miso = io_cio_spi_miso; // @[Top.scala 30:19]
   assign pll_clk_in1 = clock; // @[Top.scala 24:18]
 endmodule

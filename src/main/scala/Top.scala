@@ -12,10 +12,10 @@ import jigsaw.peripherals.spiflash._
 class Picofoxy(programFile: Option[String]) extends Module {
   val io = IO(new Bundle {
     // val gpio_io = Vec(4, Analog(1.W))
-    val spi_cs_n = Output(Bool())
-    val spi_sclk = Output(Bool())
-    val spi_mosi = Output(Bool())
-    val spi_miso = Input(Bool())
+    val cio_spi_cs_n = Output(Bool())
+    val cio_spi_sclk = Output(Bool())
+    val cio_spi_mosi = Output(Bool())
+    val cio_spi_miso = Input(Bool())
   })
 
   val top = Module(new Top(programFile))
@@ -24,10 +24,10 @@ class Picofoxy(programFile: Option[String]) extends Module {
   pll.io.clk_in1 := clock
   top.clock := pll.io.clk_out1
 
-  io.spi_cs_n := top.io.spi_cs_n
-  io.spi_sclk := top.io.spi_sclk
-  io.spi_mosi := top.io.spi_mosi
-  top.io.spi_miso := io.spi_miso
+  io.cio_spi_cs_n := top.io.spi_cs_n
+  io.cio_spi_sclk := top.io.spi_sclk
+  io.cio_spi_mosi := top.io.spi_mosi
+  top.io.spi_miso := io.cio_spi_miso
 }
 
 
