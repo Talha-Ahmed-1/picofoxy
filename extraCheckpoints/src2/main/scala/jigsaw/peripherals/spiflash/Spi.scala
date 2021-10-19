@@ -28,7 +28,6 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
     val io = IO(new Spi_IO(gen, gen1))
     val ControlReg = RegInit(0.U(32.W))
     val TxDataReg    = RegInit(0.U(32.W))
-    val TxDataValidReg = RegInit(0.B)
     val RxDataReg    = RegInit(0.U(32.W))
     val RxDataValidReg = RegInit(0.B)
 
@@ -37,7 +36,17 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
     maskedData := io.req.bits.activeByteLane.asTypeOf(Vec(4, Bool())) map (Fill(8,_))
 
     val setControlStatusReg :: readControlStatusReg :: setTxDataReg :: readTxDataReg :: readRxDataReg :: Nil = Enum(5)
+    // val process = RegInit(0.U)
 
+    // val array = Array(
+        // (io.req.bits.addrRequest === 0.U && io.req.bits.isWrite === 1.B) -> setControlStatusReg,
+        // (io.req.bits.addrRequest === 0.U && io.req.bits.isWrite === 0.B) -> readControlStatusReg
+        // (io.req.bits.addrRequest === 3.U && io.req.bits.isWrite === 1.B) -> setTxDataReg
+        // (io.req.bits.addrRequest === 3.U && io.req.bits.isWrite === 0.B) -> readTxDataReg,
+        // (io.req.bits.addrRequest === 7.U && io.req.bits.isWrite === 0.B) -> readRxDataReg
+    // )
+
+    // process := MuxCase(setTxDataReg, array)
 
     when (io.req.bits.addrRequest === 0.U && io.req.bits.isWrite === 1.B){
         ControlReg := Mux(io.req.valid, io.req.bits.dataRequest & maskedData.asUInt, 0.U)
@@ -47,7 +56,7 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
         
 
         List(io.req.ready, io.rsp.valid) map (_ := 1.B)
-        // List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
+        List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
     }
     .elsewhen(io.req.bits.addrRequest === 0.U && io.req.bits.isWrite === 0.B){
         io.rsp.bits.dataResponse := Mux(io.rsp.ready, ControlReg, 0.U)
@@ -55,17 +64,17 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
         
 
         List(io.req.ready, io.rsp.valid) map (_ := 1.B)
-        // List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare) 
+        List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare) 
     }
     .elsewhen(io.req.bits.addrRequest === 3.U && io.req.bits.isWrite === 1.B){
         TxDataReg := Mux(io.req.valid, Cat("b00000011".U,(io.req.bits.dataRequest & maskedData.asUInt)(23,0)), 0.U)
-        TxDataValidReg := Mux(io.req.valid, 1.B, 0.B)
 
         io.rsp.bits.dataResponse := Mux(io.rsp.ready, io.req.bits.addrRequest, 0.U)
         io.rsp.bits.error := Mux(io.req.valid, 0.B, 1.B)
+        
 
         List(io.req.ready, io.rsp.valid) map (_ := 1.B)
-        // List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
+        List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
     }
     .elsewhen(io.req.bits.addrRequest === 3.U && io.req.bits.isWrite === 0.B){
         io.rsp.bits.dataResponse := Mux(io.rsp.ready, TxDataReg, 0.U)
@@ -73,7 +82,7 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
         
 
         List(io.req.ready, io.rsp.valid) map (_ := 1.B)
-        // List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
+        List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
     }
     .elsewhen(io.req.bits.addrRequest === 7.U && io.req.bits.isWrite === 0.B){
         io.rsp.bits.dataResponse := Mux(io.rsp.ready, RxDataReg, 0.U)
@@ -81,7 +90,7 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
         io.rsp.valid := RxDataValidReg
 
         List(io.req.ready) map (_ := 1.B)
-        // List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
+        List(io.cs_n, io.sclk, io.mosi) map (_ := DontCare)
     }
     .otherwise{
         List(io.req.ready, io.rsp.bits.error, io.rsp.valid) map (_ := 1.B)
@@ -91,12 +100,12 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
         maskedData map (_ := DontCare)
     }
 
-    // when(ControlReg(2)){
+    when(ControlReg(2)){
     // val spiProtocol = withClock(clock) { Module(new Protocol())}
     val spiProtocol = Module(new Protocol())
     // spiProtocol.clock := clockGen(ControlReg(17,3)).asClock()
     spiProtocol.io.data_in.bits  := TxDataReg// & maskedData.asUInt
-    spiProtocol.io.data_in.valid := TxDataValidReg
+    spiProtocol.io.data_in.valid := ControlReg(2)
     spiProtocol.io.CPOL := ControlReg(1)
     spiProtocol.io.CPHA := ControlReg(0)
     spiProtocol.io.miso := io.miso
@@ -108,8 +117,8 @@ class Spi[A <: AbstrRequest, B <: AbstrResponse]
     when(spiProtocol.io.data_out.valid){
         RxDataReg := spiProtocol.io.data_out.bits
         RxDataValidReg := 1.B
-        }
-    // }
+    }
+    }
 
     // def counter(max: UInt) = {
     //     val x = RegInit(0.asUInt(max.getWidth.W))
