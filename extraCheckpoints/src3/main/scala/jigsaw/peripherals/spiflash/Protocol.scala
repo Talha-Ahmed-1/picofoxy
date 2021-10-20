@@ -52,7 +52,7 @@ class Protocol(implicit val spiConfig: Config) extends Module{
                 state := busy
                 // io.data_in.ready := 1.B
                 // io.ss := 0.B
-                // dataReg := Cat(Fill(32,0.B),io.data_in.bits) // Fill should be at the end
+                // dataReg := Cat("b00000011".U,Fill(24,0.B),io.data_in.bits) // Fill should be at the end
                 // dataReg := Cat("b00000011".U,io.data_in.bits(23,0),Fill(32,0.B))
                 
             }

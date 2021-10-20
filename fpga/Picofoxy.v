@@ -618,77 +618,77 @@ module Protocol(
   reg [63:0] _RAND_3;
   reg [31:0] _RAND_4;
 `endif // RANDOMIZE_REG_INIT
-  reg  state; // @[Protocol.scala 33:24]
-  reg [31:0] miso_dataReg; // @[Protocol.scala 35:31]
-  reg [6:0] count; // @[Protocol.scala 36:24]
-  reg [63:0] dataReg; // @[Protocol.scala 37:26]
-  wire  _io_sck_T_2 = io_CPOL ? ~clock : clock; // @[Protocol.scala 40:38]
+  reg  state; // @[Protocol.scala 29:24]
+  reg [31:0] miso_dataReg; // @[Protocol.scala 31:31]
+  reg [6:0] count; // @[Protocol.scala 32:24]
+  reg [63:0] dataReg; // @[Protocol.scala 33:26]
+  wire  _io_sck_T_2 = io_CPOL ? ~clock : clock; // @[Protocol.scala 36:38]
   wire  _T = ~state; // @[Conditional.scala 37:30]
   wire [63:0] _dataReg_T = {io_data_in_bits,32'h0}; // @[Cat.scala 30:58]
-  wire [63:0] _GEN_0 = io_data_in_valid ? _dataReg_T : dataReg; // @[Protocol.scala 55:63 Protocol.scala 60:29 Protocol.scala 37:26]
-  wire  _GEN_1 = io_data_in_valid | state; // @[Protocol.scala 55:63 Protocol.scala 61:27 Protocol.scala 33:24]
-  wire  _T_2 = count == 7'h40; // @[Protocol.scala 65:29]
-  wire [64:0] _dataReg_T_1 = {dataReg, 1'h0}; // @[Protocol.scala 73:40]
-  wire [6:0] _count_T_1 = count + 7'h1; // @[Protocol.scala 74:36]
-  wire  _GEN_5 = count == 7'h40 ? 1'h0 : dataReg[63]; // @[Protocol.scala 65:52 Protocol.scala 48:13 Protocol.scala 72:29]
-  wire [64:0] _GEN_6 = count == 7'h40 ? {{1'd0}, dataReg} : _dataReg_T_1; // @[Protocol.scala 65:52 Protocol.scala 37:26 Protocol.scala 73:29]
-  wire  _GEN_8 = state ? _T_2 : 1'h1; // @[Conditional.scala 39:67 Protocol.scala 47:11]
-  wire  _GEN_11 = state & _GEN_5; // @[Conditional.scala 39:67 Protocol.scala 48:13]
-  wire [64:0] _GEN_12 = state ? _GEN_6 : {{1'd0}, dataReg}; // @[Conditional.scala 39:67 Protocol.scala 37:26]
+  wire [63:0] _GEN_0 = io_data_in_valid ? _dataReg_T : dataReg; // @[Protocol.scala 50:59 Protocol.scala 51:25 Protocol.scala 33:26]
+  wire  _GEN_1 = io_data_in_valid | state; // @[Protocol.scala 50:59 Protocol.scala 52:23 Protocol.scala 29:24]
+  wire  _T_2 = count == 7'h40; // @[Protocol.scala 61:25]
+  wire [64:0] _dataReg_T_1 = {dataReg, 1'h0}; // @[Protocol.scala 69:36]
+  wire [6:0] _count_T_1 = count + 7'h1; // @[Protocol.scala 70:32]
+  wire  _GEN_5 = count == 7'h40 ? 1'h0 : dataReg[63]; // @[Protocol.scala 61:48 Protocol.scala 44:13 Protocol.scala 68:25]
+  wire [64:0] _GEN_6 = count == 7'h40 ? {{1'd0}, dataReg} : _dataReg_T_1; // @[Protocol.scala 61:48 Protocol.scala 33:26 Protocol.scala 69:25]
+  wire  _GEN_8 = state ? _T_2 : 1'h1; // @[Conditional.scala 39:67 Protocol.scala 43:11]
+  wire  _GEN_11 = state & _GEN_5; // @[Conditional.scala 39:67 Protocol.scala 44:13]
+  wire [64:0] _GEN_12 = state ? _GEN_6 : {{1'd0}, dataReg}; // @[Conditional.scala 39:67 Protocol.scala 33:26]
   wire [64:0] _GEN_14 = _T ? {{1'd0}, _GEN_0} : _GEN_12; // @[Conditional.scala 40:58]
-  wire  _GEN_16 = _T | _GEN_8; // @[Conditional.scala 40:58 Protocol.scala 47:11]
-  reg [6:0] count1; // @[Protocol.scala 80:29]
-  wire  _T_4 = count1 == 7'h40; // @[Protocol.scala 84:30]
-  wire [32:0] _miso_dataReg_T = {miso_dataReg, 1'h0}; // @[Protocol.scala 89:50]
-  wire [32:0] _GEN_28 = {{32'd0}, io_miso}; // @[Protocol.scala 89:55]
-  wire [32:0] _miso_dataReg_T_1 = _miso_dataReg_T | _GEN_28; // @[Protocol.scala 89:55]
-  wire [6:0] _count1_T_1 = count1 + 7'h1; // @[Protocol.scala 90:38]
-  wire [31:0] _GEN_19 = count1 == 7'h40 ? miso_dataReg : 32'h0; // @[Protocol.scala 84:77 Protocol.scala 85:38 Protocol.scala 46:22]
-  wire [32:0] _GEN_22 = count1 == 7'h40 ? {{1'd0}, miso_dataReg} : _miso_dataReg_T_1; // @[Protocol.scala 84:77 Protocol.scala 35:31 Protocol.scala 89:34]
-  wire [32:0] _GEN_27 = state ? _GEN_22 : {{1'd0}, miso_dataReg}; // @[Conditional.scala 40:58 Protocol.scala 35:31]
-  assign io_mosi = _T ? 1'h0 : _GEN_11; // @[Conditional.scala 40:58 Protocol.scala 48:13]
-  assign io_ss = state ? 1'h0 : _GEN_16; // @[Conditional.scala 40:58 Protocol.scala 83:23]
-  assign io_sck = state & _io_sck_T_2; // @[Protocol.scala 40:18]
-  assign io_data_out_valid = state & _T_4; // @[Conditional.scala 40:58 Protocol.scala 45:23]
-  assign io_data_out_bits = state ? _GEN_19 : 32'h0; // @[Conditional.scala 40:58 Protocol.scala 46:22]
+  wire  _GEN_16 = _T | _GEN_8; // @[Conditional.scala 40:58 Protocol.scala 43:11]
+  reg [6:0] count1; // @[Protocol.scala 76:25]
+  wire  _T_4 = count1 == 7'h40; // @[Protocol.scala 80:26]
+  wire [32:0] _miso_dataReg_T = {miso_dataReg, 1'h0}; // @[Protocol.scala 85:46]
+  wire [32:0] _GEN_28 = {{32'd0}, io_miso}; // @[Protocol.scala 85:51]
+  wire [32:0] _miso_dataReg_T_1 = _miso_dataReg_T | _GEN_28; // @[Protocol.scala 85:51]
+  wire [6:0] _count1_T_1 = count1 + 7'h1; // @[Protocol.scala 86:34]
+  wire [31:0] _GEN_19 = count1 == 7'h40 ? miso_dataReg : 32'h0; // @[Protocol.scala 80:73 Protocol.scala 81:34 Protocol.scala 42:22]
+  wire [32:0] _GEN_22 = count1 == 7'h40 ? {{1'd0}, miso_dataReg} : _miso_dataReg_T_1; // @[Protocol.scala 80:73 Protocol.scala 31:31 Protocol.scala 85:30]
+  wire [32:0] _GEN_27 = state ? _GEN_22 : {{1'd0}, miso_dataReg}; // @[Conditional.scala 40:58 Protocol.scala 31:31]
+  assign io_mosi = _T ? 1'h0 : _GEN_11; // @[Conditional.scala 40:58 Protocol.scala 44:13]
+  assign io_ss = state ? 1'h0 : _GEN_16; // @[Conditional.scala 40:58 Protocol.scala 79:19]
+  assign io_sck = state & _io_sck_T_2; // @[Protocol.scala 36:18]
+  assign io_data_out_valid = state & _T_4; // @[Conditional.scala 40:58 Protocol.scala 41:23]
+  assign io_data_out_bits = state ? _GEN_19 : 32'h0; // @[Conditional.scala 40:58 Protocol.scala 42:22]
   always @(posedge clock) begin
-    if (reset) begin // @[Protocol.scala 33:24]
-      state <= 1'h0; // @[Protocol.scala 33:24]
+    if (reset) begin // @[Protocol.scala 29:24]
+      state <= 1'h0; // @[Protocol.scala 29:24]
     end else if (_T) begin // @[Conditional.scala 40:58]
       state <= _GEN_1;
     end else if (state) begin // @[Conditional.scala 39:67]
-      if (count == 7'h40) begin // @[Protocol.scala 65:52]
-        state <= 1'h0; // @[Protocol.scala 68:27]
+      if (count == 7'h40) begin // @[Protocol.scala 61:48]
+        state <= 1'h0; // @[Protocol.scala 64:23]
       end
     end
-    if (reset) begin // @[Protocol.scala 35:31]
-      miso_dataReg <= 32'h0; // @[Protocol.scala 35:31]
+    if (reset) begin // @[Protocol.scala 31:31]
+      miso_dataReg <= 32'h0; // @[Protocol.scala 31:31]
     end else begin
       miso_dataReg <= _GEN_27[31:0];
     end
-    if (reset) begin // @[Protocol.scala 36:24]
-      count <= 7'h0; // @[Protocol.scala 36:24]
+    if (reset) begin // @[Protocol.scala 32:24]
+      count <= 7'h0; // @[Protocol.scala 32:24]
     end else if (!(_T)) begin // @[Conditional.scala 40:58]
       if (state) begin // @[Conditional.scala 39:67]
-        if (count == 7'h40) begin // @[Protocol.scala 65:52]
-          count <= 7'h0; // @[Protocol.scala 69:27]
+        if (count == 7'h40) begin // @[Protocol.scala 61:48]
+          count <= 7'h0; // @[Protocol.scala 65:23]
         end else begin
-          count <= _count_T_1; // @[Protocol.scala 74:27]
+          count <= _count_T_1; // @[Protocol.scala 70:23]
         end
       end
     end
-    if (reset) begin // @[Protocol.scala 37:26]
-      dataReg <= 64'h0; // @[Protocol.scala 37:26]
+    if (reset) begin // @[Protocol.scala 33:26]
+      dataReg <= 64'h0; // @[Protocol.scala 33:26]
     end else begin
       dataReg <= _GEN_14[63:0];
     end
-    if (reset) begin // @[Protocol.scala 80:29]
-      count1 <= 7'h0; // @[Protocol.scala 80:29]
+    if (reset) begin // @[Protocol.scala 76:25]
+      count1 <= 7'h0; // @[Protocol.scala 76:25]
     end else if (state) begin // @[Conditional.scala 40:58]
-      if (count1 == 7'h40) begin // @[Protocol.scala 84:77]
-        count1 <= 7'h0; // @[Protocol.scala 87:28]
+      if (count1 == 7'h40) begin // @[Protocol.scala 80:73]
+        count1 <= 7'h0; // @[Protocol.scala 83:24]
       end else begin
-        count1 <= _count1_T_1; // @[Protocol.scala 90:28]
+        count1 <= _count1_T_1; // @[Protocol.scala 86:24]
       end
     end
   end
@@ -749,8 +749,10 @@ endmodule
 module Spi(
   input         clock,
   input         reset,
+  input         io_req_valid,
   input  [31:0] io_req_bits_addrRequest,
   input  [31:0] io_req_bits_dataRequest,
+  input  [3:0]  io_req_bits_activeByteLane,
   input         io_req_bits_isWrite,
   output        io_rsp_valid,
   output [31:0] io_rsp_bits_dataResponse,
@@ -762,25 +764,54 @@ module Spi(
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
+  reg [31:0] _RAND_1;
+  reg [31:0] _RAND_2;
+  reg [31:0] _RAND_3;
+  reg [31:0] _RAND_4;
 `endif // RANDOMIZE_REG_INIT
-  wire  spiProtocol_clock; // @[Spi.scala 60:33]
-  wire  spiProtocol_reset; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_miso; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_mosi; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_ss; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_sck; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_data_in_valid; // @[Spi.scala 60:33]
-  wire [31:0] spiProtocol_io_data_in_bits; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_data_out_valid; // @[Spi.scala 60:33]
-  wire [31:0] spiProtocol_io_data_out_bits; // @[Spi.scala 60:33]
-  wire  spiProtocol_io_CPOL; // @[Spi.scala 60:33]
-  reg [31:0] ControlReg; // @[Spi.scala 32:29]
-  wire  _vv_T = io_req_bits_addrRequest == 32'h0; // @[Spi.scala 34:42]
-  wire [31:0] _GEN_1 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? spiProtocol_io_data_out_bits :
-    io_req_bits_addrRequest; // @[Spi.scala 56:79 Spi.scala 67:34 Spi.scala 83:34]
-  wire  _GEN_2 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? spiProtocol_io_data_out_valid : 1'h1; // @[Spi.scala 56:79 Spi.scala 68:22 Spi.scala 85:22]
-  wire  _GEN_3 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? 1'h0 : 1'h1; // @[Spi.scala 56:79 Spi.scala 70:27 Spi.scala 84:27]
-  Protocol spiProtocol ( // @[Spi.scala 60:33]
+  wire  spiProtocol_clock; // @[Spi.scala 96:29]
+  wire  spiProtocol_reset; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_miso; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_mosi; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_ss; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_sck; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_data_in_valid; // @[Spi.scala 96:29]
+  wire [31:0] spiProtocol_io_data_in_bits; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_data_out_valid; // @[Spi.scala 96:29]
+  wire [31:0] spiProtocol_io_data_out_bits; // @[Spi.scala 96:29]
+  wire  spiProtocol_io_CPOL; // @[Spi.scala 96:29]
+  reg [31:0] ControlReg; // @[Spi.scala 29:29]
+  reg [31:0] TxDataReg; // @[Spi.scala 30:31]
+  reg  TxDataValidReg; // @[Spi.scala 31:33]
+  reg [31:0] RxDataReg; // @[Spi.scala 32:31]
+  reg  RxDataValidReg; // @[Spi.scala 33:33]
+  wire  _vv_T = io_req_bits_addrRequest == 32'h0; // @[Spi.scala 35:42]
+  wire [7:0] maskedData_0 = io_req_bits_activeByteLane[0] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  wire [7:0] maskedData_1 = io_req_bits_activeByteLane[1] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  wire [7:0] maskedData_2 = io_req_bits_activeByteLane[2] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  wire [7:0] maskedData_3 = io_req_bits_activeByteLane[3] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  wire  _T_16 = ~io_req_bits_isWrite; // @[Spi.scala 52:70]
+  wire  _T_18 = io_req_bits_addrRequest == 32'h3; // @[Spi.scala 60:39]
+  wire [31:0] _ControlReg_T = {maskedData_3,maskedData_2,maskedData_1,maskedData_0}; // @[Spi.scala 43:78]
+  wire [31:0] _ControlReg_T_1 = io_req_bits_dataRequest & _ControlReg_T; // @[Spi.scala 43:65]
+  wire  _io_rsp_bits_error_T = io_req_valid ? 1'h0 : 1'h1; // @[Spi.scala 46:33]
+  wire [23:0] TxDataReg_lo_1 = _ControlReg_T_1[23:0]; // @[Spi.scala 61:103]
+  wire [25:0] _TxDataReg_T_2 = {2'h3,TxDataReg_lo_1}; // @[Cat.scala 30:58]
+  wire [25:0] _TxDataReg_T_3 = io_req_valid ? _TxDataReg_T_2 : 26'h0; // @[Spi.scala 61:25]
+  wire [31:0] _GEN_0 = io_req_bits_addrRequest == 32'h7 & _T_16 ? RxDataReg : io_req_bits_addrRequest; // @[Spi.scala 78:78 Spi.scala 79:34 Spi.scala 89:34]
+  wire  _GEN_1 = io_req_bits_addrRequest == 32'h7 & _T_16 ? _io_rsp_bits_error_T : 1'h1; // @[Spi.scala 78:78 Spi.scala 80:27 Spi.scala 87:68]
+  wire  _GEN_2 = io_req_bits_addrRequest == 32'h7 & _T_16 ? RxDataValidReg : 1'h1; // @[Spi.scala 78:78 Spi.scala 81:22 Spi.scala 87:68]
+  wire [31:0] _GEN_8 = _T_18 & _T_16 ? TxDataReg : _GEN_0; // @[Spi.scala 70:78 Spi.scala 71:34]
+  wire  _GEN_9 = _T_18 & _T_16 ? _io_rsp_bits_error_T : _GEN_1; // @[Spi.scala 70:78 Spi.scala 72:27]
+  wire  _GEN_11 = _T_18 & _T_16 | _GEN_2; // @[Spi.scala 70:78 Spi.scala 75:49]
+  wire [31:0] _GEN_18 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? io_req_bits_addrRequest : _GEN_8; // @[Spi.scala 60:78 Spi.scala 64:34]
+  wire  _GEN_19 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite ? _io_rsp_bits_error_T : _GEN_9; // @[Spi.scala 60:78 Spi.scala 65:27]
+  wire  _GEN_21 = io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite | _GEN_11; // @[Spi.scala 60:78 Spi.scala 67:49]
+  wire [31:0] _GEN_26 = _vv_T & ~io_req_bits_isWrite ? ControlReg : _GEN_18; // @[Spi.scala 52:78 Spi.scala 53:34]
+  wire  _GEN_27 = _vv_T & ~io_req_bits_isWrite ? _io_rsp_bits_error_T : _GEN_19; // @[Spi.scala 52:78 Spi.scala 54:27]
+  wire  _GEN_29 = _vv_T & ~io_req_bits_isWrite | _GEN_21; // @[Spi.scala 52:78 Spi.scala 57:49]
+  wire  _GEN_48 = spiProtocol_io_data_out_valid | RxDataValidReg; // @[Spi.scala 108:40 Spi.scala 110:24 Spi.scala 33:33]
+  Protocol spiProtocol ( // @[Spi.scala 96:29]
     .clock(spiProtocol_clock),
     .reset(spiProtocol_reset),
     .io_miso(spiProtocol_io_miso),
@@ -793,23 +824,55 @@ module Spi(
     .io_data_out_bits(spiProtocol_io_data_out_bits),
     .io_CPOL(spiProtocol_io_CPOL)
   );
-  assign io_rsp_valid = _vv_T & io_req_bits_isWrite | _GEN_2; // @[Spi.scala 37:74 Spi.scala 51:22]
-  assign io_rsp_bits_dataResponse = _vv_T & io_req_bits_isWrite ? io_req_bits_dataRequest : _GEN_1; // @[Spi.scala 37:74 Spi.scala 49:34]
-  assign io_rsp_bits_error = _vv_T & io_req_bits_isWrite ? 1'h0 : _GEN_3; // @[Spi.scala 37:74 Spi.scala 50:27]
-  assign io_cs_n = spiProtocol_io_ss; // @[Spi.scala 56:79 Spi.scala 79:17]
-  assign io_sclk = spiProtocol_io_sck; // @[Spi.scala 56:79 Spi.scala 78:17]
-  assign io_mosi = spiProtocol_io_mosi; // @[Spi.scala 56:79 Spi.scala 77:17]
+  assign io_rsp_valid = _vv_T & io_req_bits_isWrite | _GEN_29; // @[Spi.scala 42:74 Spi.scala 49:49]
+  assign io_rsp_bits_dataResponse = _vv_T & io_req_bits_isWrite ? io_req_bits_addrRequest : _GEN_26; // @[Spi.scala 42:74 Spi.scala 45:34]
+  assign io_rsp_bits_error = _vv_T & io_req_bits_isWrite ? _io_rsp_bits_error_T : _GEN_27; // @[Spi.scala 42:74 Spi.scala 46:27]
+  assign io_cs_n = spiProtocol_io_ss; // @[Spi.scala 104:121]
+  assign io_sclk = spiProtocol_io_sck; // @[Spi.scala 104:121]
+  assign io_mosi = spiProtocol_io_mosi; // @[Spi.scala 104:121]
   assign spiProtocol_clock = clock;
   assign spiProtocol_reset = reset;
-  assign spiProtocol_io_miso = io_miso; // @[Spi.scala 75:29]
-  assign spiProtocol_io_data_in_valid = io_req_bits_addrRequest == 32'h0 ? 1'h0 : 1'h1; // @[Spi.scala 34:17]
-  assign spiProtocol_io_data_in_bits = io_req_bits_dataRequest; // @[Spi.scala 62:38]
-  assign spiProtocol_io_CPOL = ControlReg[1]; // @[Spi.scala 73:42]
+  assign spiProtocol_io_miso = io_miso; // @[Spi.scala 102:25]
+  assign spiProtocol_io_data_in_valid = TxDataValidReg; // @[Spi.scala 99:34]
+  assign spiProtocol_io_data_in_bits = TxDataReg; // @[Spi.scala 98:34]
+  assign spiProtocol_io_CPOL = ControlReg[1]; // @[Spi.scala 100:38]
   always @(posedge clock) begin
-    if (reset) begin // @[Spi.scala 32:29]
-      ControlReg <= 32'h0; // @[Spi.scala 32:29]
-    end else if (_vv_T & io_req_bits_isWrite) begin // @[Spi.scala 37:74]
-      ControlReg <= io_req_bits_dataRequest; // @[Spi.scala 44:20]
+    if (reset) begin // @[Spi.scala 29:29]
+      ControlReg <= 32'h0; // @[Spi.scala 29:29]
+    end else if (_vv_T & io_req_bits_isWrite) begin // @[Spi.scala 42:74]
+      if (io_req_valid) begin // @[Spi.scala 43:26]
+        ControlReg <= _ControlReg_T_1;
+      end else begin
+        ControlReg <= 32'h0;
+      end
+    end
+    if (reset) begin // @[Spi.scala 30:31]
+      TxDataReg <= 32'h0; // @[Spi.scala 30:31]
+    end else if (!(_vv_T & io_req_bits_isWrite)) begin // @[Spi.scala 42:74]
+      if (!(_vv_T & ~io_req_bits_isWrite)) begin // @[Spi.scala 52:78]
+        if (io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite) begin // @[Spi.scala 60:78]
+          TxDataReg <= {{6'd0}, _TxDataReg_T_3}; // @[Spi.scala 61:19]
+        end
+      end
+    end
+    if (reset) begin // @[Spi.scala 31:33]
+      TxDataValidReg <= 1'h0; // @[Spi.scala 31:33]
+    end else if (!(_vv_T & io_req_bits_isWrite)) begin // @[Spi.scala 42:74]
+      if (!(_vv_T & ~io_req_bits_isWrite)) begin // @[Spi.scala 52:78]
+        if (io_req_bits_addrRequest == 32'h3 & io_req_bits_isWrite) begin // @[Spi.scala 60:78]
+          TxDataValidReg <= io_req_valid; // @[Spi.scala 62:24]
+        end
+      end
+    end
+    if (reset) begin // @[Spi.scala 32:31]
+      RxDataReg <= 32'h0; // @[Spi.scala 32:31]
+    end else if (spiProtocol_io_data_out_valid) begin // @[Spi.scala 108:40]
+      RxDataReg <= spiProtocol_io_data_out_bits; // @[Spi.scala 109:19]
+    end
+    if (reset) begin // @[Spi.scala 33:33]
+      RxDataValidReg <= 1'h0; // @[Spi.scala 33:33]
+    end else begin
+      RxDataValidReg <= _GEN_48;
     end
   end
 // Register and memory initialization
@@ -850,6 +913,14 @@ initial begin
 `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
   ControlReg = _RAND_0[31:0];
+  _RAND_1 = {1{`RANDOM}};
+  TxDataReg = _RAND_1[31:0];
+  _RAND_2 = {1{`RANDOM}};
+  TxDataValidReg = _RAND_2[0:0];
+  _RAND_3 = {1{`RANDOM}};
+  RxDataReg = _RAND_3[31:0];
+  _RAND_4 = {1{`RANDOM}};
+  RxDataValidReg = _RAND_4[0:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -6803,8 +6874,10 @@ module Top(
   wire [31:0] dmem_io_rsp_bits_dataResponse; // @[Top.scala 51:20]
   wire  spi_clock; // @[Top.scala 54:19]
   wire  spi_reset; // @[Top.scala 54:19]
+  wire  spi_io_req_valid; // @[Top.scala 54:19]
   wire [31:0] spi_io_req_bits_addrRequest; // @[Top.scala 54:19]
   wire [31:0] spi_io_req_bits_dataRequest; // @[Top.scala 54:19]
+  wire [3:0] spi_io_req_bits_activeByteLane; // @[Top.scala 54:19]
   wire  spi_io_req_bits_isWrite; // @[Top.scala 54:19]
   wire  spi_io_rsp_valid; // @[Top.scala 54:19]
   wire [31:0] spi_io_rsp_bits_dataResponse; // @[Top.scala 54:19]
@@ -7018,8 +7091,10 @@ module Top(
   Spi spi ( // @[Top.scala 54:19]
     .clock(spi_clock),
     .reset(spi_reset),
+    .io_req_valid(spi_io_req_valid),
     .io_req_bits_addrRequest(spi_io_req_bits_addrRequest),
     .io_req_bits_dataRequest(spi_io_req_bits_dataRequest),
+    .io_req_bits_activeByteLane(spi_io_req_bits_activeByteLane),
     .io_req_bits_isWrite(spi_io_req_bits_isWrite),
     .io_rsp_valid(spi_io_rsp_valid),
     .io_rsp_bits_dataResponse(spi_io_rsp_bits_dataResponse),
@@ -7166,8 +7241,10 @@ module Top(
   assign dmem_io_req_bits_isWrite = wb_dmem_slave_io_reqOut_bits_isWrite; // @[Top.scala 80:27]
   assign spi_clock = clock;
   assign spi_reset = reset;
+  assign spi_io_req_valid = wb_spi_slave_io_reqOut_valid; // @[Top.scala 96:26]
   assign spi_io_req_bits_addrRequest = wb_spi_slave_io_reqOut_bits_addrRequest; // @[Top.scala 96:26]
   assign spi_io_req_bits_dataRequest = wb_spi_slave_io_reqOut_bits_dataRequest; // @[Top.scala 96:26]
+  assign spi_io_req_bits_activeByteLane = wb_spi_slave_io_reqOut_bits_activeByteLane; // @[Top.scala 96:26]
   assign spi_io_req_bits_isWrite = wb_spi_slave_io_reqOut_bits_isWrite; // @[Top.scala 96:26]
   assign spi_io_miso = io_spi_miso; // @[Top.scala 102:15]
   assign wbErr_clock = clock;
