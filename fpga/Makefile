@@ -3,6 +3,7 @@ current_dir := $(patsubst %/,%,$(dir $(mkfile_path)))
 TOP:=Picofoxy
 VERILOG := ${current_dir}/Picofoxy.v \
 	   ${current_dir}/PLL_8MHz.v \
+     ${current_dir}/sram.v \
 	   ${current_dir}/clk_wiz_0_clk_wiz.v  
 DEVICE  := xc7a50t_test
 BITSTREAM_DEVICE := artix7
@@ -11,7 +12,7 @@ BUILDDIR:=build
 ifeq ($(TARGET),arty_35)
   PARTNAME := xc7a35tcsg324-1
   #XDC:=${current_dir}/arty.xdc
-  XDC:=~/Desktop/picofoxy/fpga/arty.xdc
+  XDC:=~/Music/picofoxy/fpga/arty.xdc
   BOARD_BUILDDIR := ${BUILDDIR}/arty_35
 else ifeq ($(TARGET),arty_100)
   PARTNAME:= xc7a100tcsg324-1
