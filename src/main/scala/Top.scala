@@ -15,6 +15,7 @@ class Picofoxy(programFile: Option[String]) extends Module {
   val io = IO(new Bundle {
     val gpio_io = Vec(4, Analog(1.W))
     val rx_i = Input(UInt(1.W))
+    val done = Output(Bool())
   })
 
   val top = Module(new Top(programFile))
@@ -41,6 +42,7 @@ class Picofoxy(programFile: Option[String]) extends Module {
   gpioEnableWires := top.io.gpio_en_o.asBools()
 
   top.io.rx_i := io.rx_i
+  io.done := top.io.done
 }
 
 
@@ -52,6 +54,7 @@ class Top(programFile: Option[String]) extends Module {
 
     val rx_i = Input(UInt(1.W))
     //val gpio_intr_o = Output(UInt(32.W))
+    val done = Output(Bool())
   })
 
   implicit val config: WishboneConfig = WishboneConfig(32, 32)
@@ -93,7 +96,7 @@ class Top(programFile: Option[String]) extends Module {
   val rx_data_reg                   =       RegInit(0.U(32.W))
   val rx_addr_reg                   =       RegInit(0.U(32.W))
   // val  state_check = RegInit(0.B)
-
+  io.done := puart.io.done
   when(~puart.io.done){
     wb_imem_host.io.reqIn.bits.addrRequest := 0.U
     wb_imem_host.io.reqIn.bits.dataRequest := 0.U
